@@ -1,12 +1,9 @@
-export default function EditProfile(props) {
-  const { title, children } = props;
-  return (
-    <form class="form__popup" autocomplete="off" novalidate>
-      <h2 class="form__title">{title}</h2>
-      <a href="#">
-        <img src="#" alt="imageclose" class="form__close" />
-      </a>
+import Popup from "../Popup";
 
+export default function EditProfile(props) {
+  const { title } = props;
+  return (
+    <Popup title={title}>
       <input
         type="text"
         id="name"
@@ -34,6 +31,6 @@ export default function EditProfile(props) {
       <button class="form__button" id="save">
         Guardar
       </button>
-    </form>
+    </Popup>
   );
 }

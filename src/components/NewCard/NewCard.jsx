@@ -1,15 +1,11 @@
+import React from "react";
 export default function NewCard(props) {
-  const { title, children } = props;
+  const { title } = props;
   return (
-    <form class="form__popup" id="addcard-form" autocomplete="off" novalidate>
-      <h2 class="form__title">{title}</h2>
-      <a href="#">
-        <img src="#" alt="imageclose" class="form__close" id="addcard-close" />
-      </a>
-
+    <form title={title}>
       <input
         type="text"
-        class="form__name form__input"
+        className="form__name form__input"
         placeholder="Titulo"
         id="addcard-title"
         required
@@ -17,19 +13,19 @@ export default function NewCard(props) {
         maxlength="10"
         name="title"
       />
-      <span class="form__error addcard-title-error"></span>
+      <span className="form__error addcard-title-error"></span>
 
       <input
         type="url"
-        class="form__about form__input"
+        className="form__about form__input"
         placeholder="Enlace a la imagen"
         id="addcard-url"
         required
         name="link"
       />
-      <span class="form__error addcard-url-error"></span>
+      <span className="form__error addcard-url-error"></span>
 
-      <button class="form__button" id="addcard-button">
+      <button className="form__button" id="addcard-button">
         crear
       </button>
     </form>

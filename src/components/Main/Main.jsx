@@ -1,25 +1,28 @@
 import React, { useState } from "react";
 import avatar from "../../Images/JacquesCousteau.jpg";
 import editprofile from "../../Images/EditButton.jpg";
-import EditProfile from "../EditProfile/EditProfile";
-import EditAvatar from "../EditAvatar/EditAvatar";
-function Main() {
-  const [popud, setPopup] = useState(null);
+import NewCard from "../NewCard/NewCard";
+import Popup from "../Popup";
+
+export default function Main() {
+  const [popup, setPopup] = useState(null);
   const newCardPopup = { title: "Nuevo lugar", children: <NewCard /> };
-  const EditProfilePopup = { title: "Edit profile", children: <EditProfile /> };
-  const EditAvatarPopup = {
-    title: "Cambiar foto de perfil",
-    children: <EditAvatar />,
-  };
+
+  function handleOpenPopup(popup) {
+    setPopup(popup);
+  }
+
+  function handleClosePopup() {
+    setPopup(null);
+  }
+
   return (
     <main className="content">
       <section className="profile">
         <div className="profile__avatar-container">
           <img src={avatar} alt="imageprofile" className="profile__image" />
           <div className="profile__edit-icon"></div>
-          */Icono de edición en la foto de perfil*/
         </div>
-
         <div className="profile__content">
           <div className="profile__user">
             <h2 className="profile__name">Jacques Cousteau</h2>
@@ -33,7 +36,14 @@ function Main() {
           </div>
           <p className="profile__about">Explorer</p>
         </div>
-        <p className="profile__button">+</p>
+        <button
+          aria-label="Add card"
+          className="profile__button"
+          type="button"
+          onClick={() => handleOpenPopup(newCardPopup)}
+        >
+          +
+        </button>
       </section>
 
       <div className="elements"></div>
@@ -45,5 +55,3 @@ function Main() {
     </main>
   );
 }
-
-export default Main;
