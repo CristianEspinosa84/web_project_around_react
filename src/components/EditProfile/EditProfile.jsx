@@ -1,7 +1,8 @@
-export default function EditProfile() {
+export default function EditProfile(props) {
+  const { title, children } = props;
   return (
     <form class="form__popup" autocomplete="off" novalidate>
-      <h2 class="form__title">Edit profile</h2>
+      <h2 class="form__title">{title}</h2>
       <a href="#">
         <img src="#" alt="imageclose" class="form__close" />
       </a>

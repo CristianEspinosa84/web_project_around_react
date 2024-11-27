@@ -6,8 +6,11 @@ import EditAvatar from "../EditAvatar/EditAvatar";
 function Main() {
   const [popud, setPopup] = useState(null);
   const newCardPopup = { title: "Nuevo lugar", children: <NewCard /> };
-  const EditProfilePopup = { title: "Nuevo lugar", children: <EditProfile /> };
-  const EditAvatarPopup = { title: "Nuevo lugar", children: <EditAvatar /> };
+  const EditProfilePopup = { title: "Edit profile", children: <EditProfile /> };
+  const EditAvatarPopup = {
+    title: "Cambiar foto de perfil",
+    children: <EditAvatar />,
+  };
   return (
     <main className="content">
       <section className="profile">

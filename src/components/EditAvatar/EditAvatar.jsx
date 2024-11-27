@@ -1,7 +1,8 @@
-export default function EditAvatar() {
+export default function EditAvatar(props) {
+  const { title, children } = props;
   return (
     <form class="edit__popup form__popup" autocomplete="off" novalidate>
-      <h2 class="form__title">Cambiar foto de perfil</h2>
+      <h2 class="form__title">{title}</h2>
       <a href="#">
         <img
           src="#"
