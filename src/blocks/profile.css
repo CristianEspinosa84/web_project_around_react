@@ -22,28 +22,29 @@
 }
 
 .profile__edit-icon {
-  position: absolute;
-  top: 50%;
-  left: 40%;
+  position: relative;
+  bottom: 130px;
+  left: 60px;
   transform: translate(-50%, -50%);
   width: 30px; /* Ajusta el tamaño según sea necesario */
   height: 30px;
-  background-image: url(../Images/EditButton.jpg); /* Ruta de la imagen del lápiz */
+  background-image: url(../Images/EditButton.jpg);
   background-size: cover;
   background-repeat: no-repeat;
   opacity: 0;
   transition: opacity 0.3s ease;
   cursor: pointer;
+  background-color: #000;
 }
 
 /* Mostrar el icono de edición al hacer hover sobre el contenedor de la imagen */
 /* Efecto al hacer hover sobre el contenedor */
 .profile__avatar-container:hover .profile__image {
-  opacity: 0.5; /* Opaca la imagen de perfil */
+  opacity: 0; /* Opaca la imagen de perfil */
 }
 
 .profile__avatar-container:hover .profile__edit-icon {
-  opacity: 1; /* Muestra el icono de edición */
+  opacity: 0.5; /* Muestra el icono de edición */
 }
 
 .profile__content {
@@ -86,10 +87,14 @@
 }
 
 .profile__edit {
-  margin-left: 15px;
+  margin-left: 20px;
   opacity: 1;
   transition: opacity 0.5s ease;
   cursor: pointer;
+  position: relative;
+  right: 200px;
+  bottom: 7px;
+  background-color: #000;
 }
 
 .profile__edit:hover {
@@ -117,18 +122,7 @@
   opacity: 0.7;
 }
 
-@media screen and (max-width: 743px) {
-  .profile__name {
-    width: 150px;
-  }
-
-  .profile__user {
-    display: flex;
-    align-items: flex-start;
-  }
-}
-
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 635px) {
   .profile {
     display: flex;
     flex-direction: column;
@@ -157,6 +151,37 @@
     width: 300px;
     font-size: 30px;
     text-align: center;
+    margin-top: 10px;
+  }
+  .profile__edit {
+    position: relative;
+    bottom: 165px;
+    right: 30px;
+  }
+
+  .profile__edit-icon {
+    position: relative;
+    bottom: 314px;
+    left: 135px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .profile__user {
+    display: flex;
+    align-items: flex-start;
+  }
+
+  .profile__edit {
+    position: relative;
+    bottom: 165px;
+    right: 30px;
+  }
+
+  .profile__edit-icon {
+    position: relative;
+    bottom: 320px;
+    left: 135px;
   }
 }
 
@@ -171,7 +196,15 @@
     align-items: center;
   }
 
-  .profile__edit {
-    margin: 0;
+  .profile__edit-icon {
+    position: relative;
+    bottom: 310px;
+    left: 140px;
+  }
+}
+
+@media (max-width: 303px) {
+  .profile__button {
+    width: 150px;
   }
 }

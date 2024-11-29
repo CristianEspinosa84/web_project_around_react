@@ -3,7 +3,7 @@ import Popup from "../Popup";
 export default function EditAvatar(props) {
   const { title } = props;
   return (
-    <Popup title={title}>
+    <form>
       <input
         type="url"
         class="form__input form__photo"
@@ -17,6 +17,6 @@ export default function EditAvatar(props) {
       <button class="form__button" id="save-photo-button">
         Guardar
       </button>
-    </Popup>
+    </form>
   );
 }

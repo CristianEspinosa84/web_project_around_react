@@ -2,8 +2,8 @@ import React from "react";
 export default function Popup(props) {
   const { title, children, onClose } = props;
   return (
-    <div className="form closed-window" id="popup">
-      <form className="form__popup" autocomplete="off" novalidate>
+    <div className="form" id="popup">
+      <div className="form__popup" autocomplete="off" novalidate>
         <h2 className="form__title">{title}</h2>
         <button
           type="button"
@@ -11,10 +11,14 @@ export default function Popup(props) {
           className="form__close"
           onClick={onClose}
         >
-          <img src="/Images/CloseIcon.jpg" alt="iconClose" />
+          <img
+            src="../src/Images/CloseIcon.jpg"
+            alt="iconClose"
+            className="form__image_close"
+          />
         </button>
         {children}
-      </form>
+      </div>
     </div>
   );
 }

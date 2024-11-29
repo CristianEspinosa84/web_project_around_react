@@ -2,7 +2,7 @@ import React from "react";
 export default function NewCard(props) {
   const { title } = props;
   return (
-    <form title={title}>
+    <form>
       <input
         type="text"
         className="form__name form__input"

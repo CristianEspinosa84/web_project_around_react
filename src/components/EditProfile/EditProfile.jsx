@@ -3,7 +3,7 @@ import Popup from "../Popup";
 export default function EditProfile(props) {
   const { title } = props;
   return (
-    <Popup title={title}>
+    <form>
       <input
         type="text"
         id="name"
@@ -31,6 +31,6 @@ export default function EditProfile(props) {
       <button class="form__button" id="save">
         Guardar
       </button>
-    </Popup>
+    </form>
   );
 }
