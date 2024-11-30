@@ -1,8 +1,7 @@
 import React from "react";
-export default function ImagePopup({ card, onClose }) {
+export default function ImagePopup({ onClose, title, link }) {
   return (
-    <div className="form popup popup-closed" id="popup__image">
-      <img className="popup__picture" src={card.link} alt={card.name} />
+    <div className="form popup" id="popup__image">
       <button
         aria-label="Close modal"
         className="popup__close"
@@ -12,10 +11,12 @@ export default function ImagePopup({ card, onClose }) {
         <img
           src="../src/Images/CloseIcon.jpg"
           alt="imageclose"
-          className="popup__close"
+          className="popup__close-image"
         />
       </button>
-      <h3 className="popup__title"></h3>
+      <img className="popup__picture" src={link} alt={title} />
+
+      <h3 className="popup__title">{title}</h3>
     </div>
   );
 }

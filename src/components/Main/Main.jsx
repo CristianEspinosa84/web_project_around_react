@@ -30,6 +30,8 @@ console.log(cards);
 
 export default function Main() {
   const [popup, setPopup] = useState(null);
+  const [popupImage, setImagePopup] = useState(null);
+
   const newCardPopup = { title: "Nuevo lugar", children: <NewCard /> };
   const editProfilePopup = { title: "Edit Profile", children: <EditProfile /> };
   const editAvatarPopup = {
@@ -42,6 +44,11 @@ export default function Main() {
 
   function handleClosePopup() {
     setPopup(null);
+    setImagePopup(null);
+  }
+
+  function handleOpenImagePopup(title, link) {
+    setImagePopup({ title: title, link: link });
   }
 
   return (
@@ -88,9 +95,21 @@ export default function Main() {
         </Popup>
       )}
 
+      {popupImage && (
+        <ImagePopup
+          onClose={handleClosePopup}
+          title={popupImage.title}
+          link={popupImage.link}
+        />
+      )}
+
       <ul className="cards__list">
         {cards.map((card) => (
-          <Card key={card._id} card={card} />
+          <Card
+            key={card._id}
+            card={card}
+            onOpenImagePopup={handleOpenImagePopup}
+          />
         ))}
       </ul>
     </main>

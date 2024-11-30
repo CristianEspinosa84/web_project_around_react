@@ -1,16 +1,21 @@
 import React from "react";
 
-export default function Card({ card }) {
+export default function Card({ card, onOpenImagePopup }) {
   const { name, link, isLiked } = card;
+
+  const onCardClick = () => {
+    onOpenImagePopup(name, link);
+  };
+
   return (
     <li className="card">
       <img
         src={link}
         alt={name}
         className="card__image"
-        onClick={() => onCardClick(card)}
+        onClick={onCardClick}
       />
-      <div class="card__info">
+      <div className="card__info">
         <button
           aria-label="Delete card"
           className="card__delete-button "
