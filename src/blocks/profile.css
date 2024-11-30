@@ -39,9 +39,9 @@
 
 /* Mostrar el icono de edición al hacer hover sobre el contenedor de la imagen */
 /* Efecto al hacer hover sobre el contenedor */
-.profile__avatar-container:hover .profile__image {
-  opacity: 0; /* Opaca la imagen de perfil */
-}
+/* .profile__avatar-container:hover .profile__image {
+  opacity: 0; // Opaca la imagen de perfil //
+} */
 
 .profile__avatar-container:hover .profile__edit-icon {
   opacity: 0.5; /* Muestra el icono de edición */
