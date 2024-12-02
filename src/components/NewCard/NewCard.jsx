@@ -9,8 +9,8 @@ export default function NewCard(props) {
         placeholder="Titulo"
         id="addcard-title"
         required
-        minlength="2"
-        maxlength="10"
+        minLength="2"
+        maxLength="10"
         name="title"
       />
       <span className="form__error addcard-title-error"></span>

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import avatar from "../../Images/JacquesCousteau.jpg";
 import NewCard from "../NewCard/NewCard";
-import Popup from "../Popup";
+import Popup from "../Popup/Popup";
 import EditProfile from "../EditProfile/EditProfile";
 import EditAvatar from "../EditAvatar/EditAvatar";
 import Card from "../Card/Card";

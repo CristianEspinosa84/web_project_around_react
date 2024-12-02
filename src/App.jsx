@@ -7,7 +7,7 @@ import "../src/Pages/index.css";
 function App() {
   return (
     <div className="page">
-      <div class="overlay"></div>
+      <div className="overlay"></div>
       <Header />
       <Main />
       <Footer />

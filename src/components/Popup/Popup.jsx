@@ -3,7 +3,7 @@ export default function Popup(props) {
   const { title, children, onClose } = props;
   return (
     <div className="form" id="popup">
-      <div className="form__popup" autocomplete="off" novalidate>
+      <div className="form__popup" autoComplete="off" noValidate>
         <h2 className="form__title">{title}</h2>
         <button
           type="button"
