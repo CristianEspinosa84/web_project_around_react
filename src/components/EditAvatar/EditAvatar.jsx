@@ -1,7 +1,7 @@
 import Popup from "../Popup/Popup";
 
 export default function EditAvatar(props) {
-  const { title } = props;
+  const {} = props;
   return (
     <form>
       <input

@@ -1,6 +1,6 @@
 import React from "react";
 export default function NewCard(props) {
-  const { title } = props;
+  const {} = props;
   return (
     <form>
       <input
