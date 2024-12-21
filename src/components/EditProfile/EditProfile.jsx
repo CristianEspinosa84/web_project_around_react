@@ -10,7 +10,7 @@ export default function EditProfile(props) {
         className="form__input form__name"
         required
         minLength="2"
-        maxLength="40"
+        maxL1ength="40"
         name="name"
       />
 

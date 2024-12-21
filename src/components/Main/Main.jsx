@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import avatar from "../../Images/JacquesCousteau.jpg";
 import NewCard from "../NewCard/NewCard";
 import Popup from "../Popup/Popup";
@@ -6,32 +6,16 @@ import EditProfile from "../EditProfile/EditProfile";
 import EditAvatar from "../EditAvatar/EditAvatar";
 import Card from "../Card/Card";
 import ImagePopup from "../ImagePopup/ImagePopup";
-
-const cards = [
-  {
-    isLiked: false,
-    _id: "5d1f0611d321eb4bdcd707dd",
-    name: "Yosemite Valley",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_yosemite.jpg",
-    owner: "5d1f0611d321eb4bdcd707dd",
-    createdAt: "2019-07-05T08:10:57.741Z",
-  },
-  {
-    isLiked: false,
-    _id: "5d1f064ed321eb4bdcd707de",
-    name: "Lake Louise",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_lake-louise.jpg",
-    owner: "5d1f0611d321eb4bdcd707dd",
-    createdAt: "2019-07-05T08:11:58.324Z",
-  },
-];
-
-console.log(cards);
+import Api from "../../Utils/Api";
+import { api } from "../../Utils/Api";
+import CurrentUserContext from "../../contexts/CurrentUserContext";
 
 export default function Main() {
+  const currentUser = useContext(CurrentUserContext);
   const [popup, setPopup] = useState(null);
   const [popupImage, setImagePopup] = useState(null);
-
+  const [cards, setCards] = useState([]);
+  console.log(cards);
   const newCardPopup = { title: "Nuevo lugar", children: <NewCard /> };
   const editProfilePopup = { title: "Edit Profile", children: <EditProfile /> };
   const editAvatarPopup = {
@@ -50,6 +34,52 @@ export default function Main() {
   function handleOpenImagePopup(title, link) {
     setImagePopup({ title: title, link: link });
   }
+
+  function handleCardDelete(card) {
+    const cardId = card._id;
+    api
+      .deleteCard(cardId)
+      .then(() => {
+        setCards((prevCards) => prevCards.filter((c) => c._id !== cardId));
+      })
+      .catch((err) => {
+        console.error("Error al obtener la información del usuario:", err);
+      });
+  }
+
+  function handleCardLike(card) {
+    const isLiked = card.isLiked; // Verifica si la tarjeta ya tiene like
+
+    // Decide si llamar a likeCard o dislikeCard
+    const apiCall = isLiked
+      ? api.dislikeCard(card._id)
+      : api.likeCard(card._id);
+
+    apiCall
+      .then((newCard) => {
+        // Actualiza el estado con la tarjeta actualizada
+        setCards((state) =>
+          state.map((currentCard) =>
+            currentCard._id === card._id ? newCard : currentCard
+          )
+        );
+      })
+      .catch((err) =>
+        console.error("Error al cambiar el estado del like:", err)
+      );
+  }
+
+  useEffect(() => {
+    api
+      .getInitialCards() // Llama al método de la instancia
+      .then((fetchedCards) => {
+        console.log("Tarjetas obtenidas:", fetchedCards);
+        setCards(fetchedCards); // Actualiza el estado con los datos obtenidos
+      })
+      .catch((err) => {
+        console.error("Error al obtener las tarjetas:", err); // Maneja errores
+      });
+  }, []); // Solo se ejecuta al montar el componente
 
   return (
     <main className="content">
@@ -104,13 +134,21 @@ export default function Main() {
       )}
 
       <ul className="cards__list">
-        {cards.map((card) => (
-          <Card
-            key={card._id}
-            card={card}
-            onOpenImagePopup={handleOpenImagePopup}
-          />
-        ))}
+        {cards.map((card) => {
+          const isLiked = card.likes.some(
+            (like) => like._id === currentUser._id
+          );
+
+          return (
+            <Card
+              key={card._id}
+              card={{ ...card, isLiked }}
+              onCardLike={handleCardLike} // Pasa la función como prop
+              onOpenImagePopup={handleOpenImagePopup}
+              onCardDelete={handleCardDelete}
+            />
+          );
+        })}
       </ul>
     </main>
   );
