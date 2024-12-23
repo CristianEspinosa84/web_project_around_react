@@ -6,12 +6,12 @@ import EditProfile from "../EditProfile/EditProfile";
 import EditAvatar from "../EditAvatar/EditAvatar";
 import Card from "../Card/Card";
 import ImagePopup from "../ImagePopup/ImagePopup";
-import Api from "../../Utils/Api";
 import { api } from "../../Utils/Api";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 
 export default function Main() {
   const currentUser = useContext(CurrentUserContext);
+  console.log("currentUser en Main.jsx:", currentUser);
   const [popup, setPopup] = useState(null);
   const [popupImage, setImagePopup] = useState(null);
   const [cards, setCards] = useState([]);
@@ -89,7 +89,7 @@ export default function Main() {
         </div>
         <div className="profile__content">
           <div className="profile__user">
-            <h2 className="profile__name">Jacques Cousteau</h2>
+            <h2 className="profile__name">{currentUser?.name || ""}</h2>
           </div>
           <p className="profile__about">Explorer</p>
         </div>
@@ -146,6 +146,7 @@ export default function Main() {
               onCardLike={handleCardLike} // Pasa la función como prop
               onOpenImagePopup={handleOpenImagePopup}
               onCardDelete={handleCardDelete}
+              popup={popup}
             />
           );
         })}
