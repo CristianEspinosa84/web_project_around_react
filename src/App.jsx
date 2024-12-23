@@ -34,7 +34,7 @@ function App() {
   };
 
   return (
-    <CurrentUserContext.Provider value={(currentUser, handleUpdateUser)}>
+    <CurrentUserContext.Provider value={{ currentUser, handleUpdateUser }}>
       <div className="page">
         <div className="overlay"></div>
         <Header />
