@@ -9,30 +9,36 @@ import ImagePopup from "../ImagePopup/ImagePopup";
 import { api } from "../../Utils/Api";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 
-export default function Main() {
+export default function Main({
+  onOpenPopup,
+  onClosePopup,
+  popup,
+  onOpenImagePopup,
+  popupImage,
+}) {
   const currentUser = useContext(CurrentUserContext);
-  console.log("currentUser en Main.jsx:", currentUser);
-  const [popup, setPopup] = useState(null);
-  const [popupImage, setImagePopup] = useState(null);
+  // console.log("currentUser en Main.jsx:", currentUser);
+  // const [popup, setPopup] = useState(null);
+  // const [popupImage, setImagePopup] = useState(null);
   const [cards, setCards] = useState([]);
-  console.log(cards);
+  // console.log(cards);
   const newCardPopup = { title: "Nuevo lugar", children: <NewCard /> };
   const editProfilePopup = { title: "Edit Profile", children: <EditProfile /> };
   const editAvatarPopup = {
     title: "Cambiar foto de perfil",
     children: <EditAvatar />,
   };
-  function handleOpenPopup(popup) {
-    setPopup(popup);
-  }
+  // function handleOpenPopup(popup) {
+  //   setPopup(popup);
+  // }
 
-  function handleClosePopup() {
-    setPopup(null);
-    setImagePopup(null);
-  }
+  // function handleClosePopup() {
+  //   setPopup(null);
+  //   setImagePopup(null);
+  // }
 
   function handleOpenImagePopup(title, link) {
-    setImagePopup({ title: title, link: link });
+    onOpenImagePopup({ title, link });
   }
 
   function handleCardDelete(card) {
@@ -49,7 +55,8 @@ export default function Main() {
 
   function handleCardLike(card) {
     const isLiked = card.isLiked; // Verifica si la tarjeta ya tiene like
-
+    console.log("Card data:", card);
+    console.log("Is liked:", isLiked);
     // Decide si llamar a likeCard o dislikeCard
     const apiCall = isLiked
       ? api.dislikeCard(card._id)
@@ -57,6 +64,7 @@ export default function Main() {
 
     apiCall
       .then((newCard) => {
+        console.log("Updated card from API:", newCard);
         // Actualiza el estado con la tarjeta actualizada
         setCards((state) =>
           state.map((currentCard) =>
@@ -73,7 +81,7 @@ export default function Main() {
     api
       .getInitialCards() // Llama al método de la instancia
       .then((fetchedCards) => {
-        console.log("Tarjetas obtenidas:", fetchedCards);
+        // console.log("Tarjetas obtenidas:", fetchedCards);
         setCards(fetchedCards); // Actualiza el estado con los datos obtenidos
       })
       .catch((err) => {
@@ -89,15 +97,19 @@ export default function Main() {
         </div>
         <div className="profile__content">
           <div className="profile__user">
-            <h2 className="profile__name">{currentUser?.name || ""}</h2>
+            <h2 className="profile__name">
+              {currentUser.currentUser?.name || ""}
+            </h2>
           </div>
-          <p className="profile__about">Explorer</p>
+          <p className="profile__about">
+            {currentUser.currentUser?.about || ""}
+          </p>
         </div>
         <button
           aria-label="Add card"
           className="profile__button"
           type="button"
-          onClick={() => handleOpenPopup(newCardPopup)}
+          onClick={() => onOpenPopup(newCardPopup)}
         >
           +
         </button>
@@ -106,7 +118,7 @@ export default function Main() {
           aria-label="Add card"
           className="profile__edit"
           type="button"
-          onClick={() => handleOpenPopup(editProfilePopup)}
+          onClick={() => onOpenPopup(editProfilePopup)}
         >
           <img src="../src/Images/EditButton.jpg" alt="buttonprofile" />
         </button>
@@ -116,18 +128,18 @@ export default function Main() {
         aria-label="Add card"
         className="profile__edit-icon"
         type="button"
-        onClick={() => handleOpenPopup(editAvatarPopup)}
+        onClick={() => onOpenPopup(editAvatarPopup)}
       ></button>
 
       {popup && (
-        <Popup onClose={handleClosePopup} title={popup.title}>
+        <Popup onClose={onClosePopup} title={popup.title}>
           {popup.children}
         </Popup>
       )}
 
       {popupImage && (
         <ImagePopup
-          onClose={handleClosePopup}
+          onClose={onClosePopup}
           title={popupImage.title}
           link={popupImage.link}
         />
@@ -136,7 +148,7 @@ export default function Main() {
       <ul className="cards__list">
         {cards.map((card) => {
           const isLiked = card.likes.some(
-            (like) => like._id === currentUser._id
+            (like) => like._id === currentUser.currentUser._id
           );
 
           return (
@@ -146,7 +158,6 @@ export default function Main() {
               onCardLike={handleCardLike} // Pasa la función como prop
               onOpenImagePopup={handleOpenImagePopup}
               onCardDelete={handleCardDelete}
-              popup={popup}
             />
           );
         })}

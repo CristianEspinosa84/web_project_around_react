@@ -51,6 +51,7 @@ export default class Api {
 
   // Dar "me gusta" a una tarjeta
   likeCard(cardId) {
+    console.log("Liking card:", cardId);
     return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
       method: "PUT",
       headers: this._headers,
@@ -59,6 +60,7 @@ export default class Api {
 
   // Quitar "me gusta" de una tarjeta
   dislikeCard(cardId) {
+    console.log("Disliking card:", cardId);
     return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
       method: "DELETE",
       headers: this._headers,

@@ -14,6 +14,7 @@ export default function Card({
 
   const handleLikeClick = () => {
     onCardLike(card); // Llama a la función pasando la tarjeta
+    console.log("Like button clicked for card:", card);
   };
 
   // Determinar la clase dinámica para el botón "like"
