@@ -78,10 +78,6 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
   }
-  .profile__edit {
-    position: relative;
-    right: 205px;
-  }
 }
 
 @media screen and (max-width: 635px) {
@@ -94,10 +90,10 @@
     gap: 5px;
     justify-items: center;
   }
-  .profile__edit {
+  /* .profile__edit {
     position: relative;
     right: 32px;
-  }
+  } */
 }
 
 @media screen and (max-width: 400px) {

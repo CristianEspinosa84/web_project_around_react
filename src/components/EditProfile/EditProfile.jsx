@@ -1,13 +1,15 @@
 import Popup from "../Popup/Popup";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
-import { useContext, useState } from "react";
+import { useContext, useState, useRef } from "react";
 
-export default function EditProfile() {
+export default function EditProfile({ onClose }) {
   const { currentUser, handleUpdateUser } = useContext(CurrentUserContext);
   console.log("currentUser:", currentUser);
   console.log("handleUpdateUser:", handleUpdateUser);
   const [name, setName] = useState(currentUser?.name || ""); // Agrega la variable de estado para name
   const [description, setDescription] = useState(currentUser?.about || ""); // Agrega la variable de estado para description
+  const { handleUpdateAvatar } = useContext(CurrentUserContext); // Obtiene la función del contexto
+  const avatarRef = useRef(); // Crea un ref para el campo de entrada
 
   const handleNameChange = (event) => {
     setName(event.target.value); // Actualiza name cuando cambie la entrada
@@ -19,7 +21,12 @@ export default function EditProfile() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    handleUpdateUser({ name, about: description });
+
+    handleUpdateAvatar({
+      avatar: avatarRef.current.value, // Obtiene el valor del campo de entrada
+    });
+
+    avatarRef.current.value = ""; // Limpia el campo de entrada después de enviar
   };
 
   return (

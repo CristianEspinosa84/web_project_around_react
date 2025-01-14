@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import avatar from "../../Images/JacquesCousteau.jpg";
+// import avatar from "../../Images/JacquesCousteau.jpg";
 import NewCard from "../NewCard/NewCard";
 import Popup from "../Popup/Popup";
 import EditProfile from "../EditProfile/EditProfile";
@@ -17,25 +17,14 @@ export default function Main({
   popupImage,
 }) {
   const currentUser = useContext(CurrentUserContext);
-  // console.log("currentUser en Main.jsx:", currentUser);
-  // const [popup, setPopup] = useState(null);
-  // const [popupImage, setImagePopup] = useState(null);
+  console.log("currentUser en Main.jsx:", currentUser);
   const [cards, setCards] = useState([]);
-  // console.log(cards);
   const newCardPopup = { title: "Nuevo lugar", children: <NewCard /> };
   const editProfilePopup = { title: "Edit Profile", children: <EditProfile /> };
   const editAvatarPopup = {
     title: "Cambiar foto de perfil",
-    children: <EditAvatar />,
+    children: <EditAvatar onClose={onClosePopup} />,
   };
-  // function handleOpenPopup(popup) {
-  //   setPopup(popup);
-  // }
-
-  // function handleClosePopup() {
-  //   setPopup(null);
-  //   setImagePopup(null);
-  // }
 
   function handleOpenImagePopup(title, link) {
     onOpenImagePopup({ title, link });
@@ -93,14 +82,37 @@ export default function Main({
     <main className="content">
       <section className="profile">
         <div className="profile__avatar-container">
-          <img src={avatar} alt="imageprofile" className="profile__image" />
+          <img
+            src={
+              currentUser.currentUser?.avatar ||
+              "../../Images/JacquesCousteau.jpg"
+            }
+            alt="imageprofile"
+            className="profile__image"
+          />
+
+          <button
+            aria-label="Add card"
+            className="profile__edit-icon"
+            type="submit"
+            onClick={() => onOpenPopup(editAvatarPopup)}
+          ></button>
         </div>
         <div className="profile__content">
           <div className="profile__user">
             <h2 className="profile__name">
               {currentUser.currentUser?.name || ""}
             </h2>
+            <button
+              aria-label="Add card"
+              className="profile__edit"
+              type="button"
+              onClick={() => onOpenPopup(editProfilePopup)}
+            >
+              <img src="../src/Images/EditButton.jpg" alt="buttonprofile" />
+            </button>
           </div>
+
           <p className="profile__about">
             {currentUser.currentUser?.about || ""}
           </p>
@@ -113,23 +125,7 @@ export default function Main({
         >
           +
         </button>
-
-        <button
-          aria-label="Add card"
-          className="profile__edit"
-          type="button"
-          onClick={() => onOpenPopup(editProfilePopup)}
-        >
-          <img src="../src/Images/EditButton.jpg" alt="buttonprofile" />
-        </button>
       </section>
-
-      <button
-        aria-label="Add card"
-        className="profile__edit-icon"
-        type="button"
-        onClick={() => onOpenPopup(editAvatarPopup)}
-      ></button>
 
       {popup && (
         <Popup onClose={onClosePopup} title={popup.title}>
@@ -148,7 +144,7 @@ export default function Main({
       <ul className="cards__list">
         {cards.map((card) => {
           const isLiked = card.likes.some(
-            (like) => like._id === currentUser.currentUser._id
+            (like) => like._id === currentUser?.currentUser?._id
           );
 
           return (

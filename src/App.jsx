@@ -17,6 +17,7 @@ function App() {
     api
       .getUserInfo()
       .then((userData) => {
+        console.log("Datos del usuario obtenidos:", userData);
         setCurrentUser(userData); // Actualiza el estado con los datos del usuario
       })
       .catch((err) => {
@@ -50,8 +51,23 @@ function App() {
     setImagePopup(imageData); // Actualiza el estado con los datos de la imagen
   }
 
+  function handleUpdateAvatar(data) {
+    api
+      .updateUserAvatar(data.avatar) // Llama a la API con la nueva URL del avatar
+      .then((newData) => {
+        console.log("Avatar actualizado por la API:", updatedUser);
+        setCurrentUser(newData); // Actualiza el estado global con los datos recibidos
+        handleClosePopup(); // Cierra el popup después de actualizar
+      })
+      .catch((err) => {
+        console.error("Error al actualizar el avatar:", err);
+      });
+  }
+
   return (
-    <CurrentUserContext.Provider value={{ currentUser, handleUpdateUser }}>
+    <CurrentUserContext.Provider
+      value={{ currentUser, handleUpdateUser, handleUpdateAvatar }}
+    >
       <div className="page">
         <div className="overlay"></div>
         <Header />
