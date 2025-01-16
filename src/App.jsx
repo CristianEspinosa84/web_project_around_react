@@ -3,7 +3,7 @@ import Header from "./components/Header/Header.jsx";
 import Footer from "./components/Footer/Footer.jsx";
 import Main from "./components/Main/Main.jsx";
 import "../src/Pages/index.css";
-import { api } from "./utils/Api.js";
+import { api } from "./Utils/Api.js";
 import CurrentUserContext from "./contexts/CurrentUserContext.js";
 
 function App() {

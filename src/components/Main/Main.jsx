@@ -5,7 +5,7 @@ import EditProfile from "../EditProfile/EditProfile";
 import EditAvatar from "../EditAvatar/EditAvatar";
 import Card from "../Card/Card";
 import ImagePopup from "../ImagePopup/ImagePopup";
-import { api } from "../../utils/Api";
+import { api } from "../../Utils/Api";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 
 export default function Main({
