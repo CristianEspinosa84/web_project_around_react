@@ -1,10 +1,24 @@
-import Popup from "../Popup/Popup";
+import { useRef, useContext } from "react";
+import CurrentUserContext from "../../contexts/CurrentUserContext";
 
-export default function EditAvatar(props) {
-  const {} = props;
+export default function EditAvatar() {
+  const { handleUpdateAvatar } = useContext(CurrentUserContext); // Obtén la función del contexto
+  const avatarRef = useRef(); // Crea un ref para el campo de entrada
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    handleUpdateAvatar({
+      avatar: avatarRef.current.value, // Obtiene el valor del campo de entrada
+    });
+
+    avatarRef.current.value = ""; // Limpia el campo de entrada después de enviar
+  };
+
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <input
+        ref={avatarRef} // Usa el ref aquí
         type="url"
         className="form__input form__photo"
         placeholder="URL de la imagen"

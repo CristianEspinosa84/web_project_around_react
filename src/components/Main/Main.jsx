@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from "react";
-// import avatar from "../../Images/JacquesCousteau.jpg";
 import NewCard from "../NewCard/NewCard";
 import Popup from "../Popup/Popup";
 import EditProfile from "../EditProfile/EditProfile";
@@ -10,73 +9,45 @@ import { api } from "../../Utils/Api";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 
 export default function Main({
+  cards,
   onOpenPopup,
   onClosePopup,
   popup,
   onOpenImagePopup,
   popupImage,
+  handleUpdateAvatar,
+  handleUpdateUser,
+  handleCardLike,
+  handleCardDelete,
+  handleAddPlaceSubmit,
 }) {
+  console.log("Cards en Main:", cards);
   const currentUser = useContext(CurrentUserContext);
   console.log("currentUser en Main.jsx:", currentUser);
-  const [cards, setCards] = useState([]);
-  const newCardPopup = { title: "Nuevo lugar", children: <NewCard /> };
-  const editProfilePopup = { title: "Edit Profile", children: <EditProfile /> };
+  // const [cards, setCards] = useState([]);
+  const newCardPopup = () => {
+    onOpenPopup({
+      title: "Nuevo lugar",
+      children: <NewCard onAddPlaceSubmit={handleAddPlaceSubmit} />, // Pasamos la función
+    });
+  };
+  const editProfilePopup = {
+    title: "Edit Profile",
+    children: <EditProfile handleUpdateUser={handleUpdateUser} />,
+  };
   const editAvatarPopup = {
     title: "Cambiar foto de perfil",
-    children: <EditAvatar onClose={onClosePopup} />,
+    children: (
+      <EditAvatar
+        onClose={onClosePopup}
+        handleUpdateAvatar={handleUpdateAvatar} // Pasar como prop
+      />
+    ),
   };
 
   function handleOpenImagePopup(title, link) {
     onOpenImagePopup({ title, link });
   }
-
-  function handleCardDelete(card) {
-    const cardId = card._id;
-    api
-      .deleteCard(cardId)
-      .then(() => {
-        setCards((prevCards) => prevCards.filter((c) => c._id !== cardId));
-      })
-      .catch((err) => {
-        console.error("Error al obtener la información del usuario:", err);
-      });
-  }
-
-  function handleCardLike(card) {
-    const isLiked = card.isLiked; // Verifica si la tarjeta ya tiene like
-    console.log("Card data:", card);
-    console.log("Is liked:", isLiked);
-    // Decide si llamar a likeCard o dislikeCard
-    const apiCall = isLiked
-      ? api.dislikeCard(card._id)
-      : api.likeCard(card._id);
-
-    apiCall
-      .then((newCard) => {
-        console.log("Updated card from API:", newCard);
-        // Actualiza el estado con la tarjeta actualizada
-        setCards((state) =>
-          state.map((currentCard) =>
-            currentCard._id === card._id ? newCard : currentCard
-          )
-        );
-      })
-      .catch((err) =>
-        console.error("Error al cambiar el estado del like:", err)
-      );
-  }
-
-  useEffect(() => {
-    api
-      .getInitialCards() // Llama al método de la instancia
-      .then((fetchedCards) => {
-        // console.log("Tarjetas obtenidas:", fetchedCards);
-        setCards(fetchedCards); // Actualiza el estado con los datos obtenidos
-      })
-      .catch((err) => {
-        console.error("Error al obtener las tarjetas:", err); // Maneja errores
-      });
-  }, []); // Solo se ejecuta al montar el componente
 
   return (
     <main className="content">
@@ -146,6 +117,15 @@ export default function Main({
           const isLiked = card.likes.some(
             (like) => like._id === currentUser?.currentUser?._id
           );
+
+          {
+            popup && popup.title === "Nuevo lugar" && (
+              <Popup onClose={onClosePopup} title={popup.title}>
+                <NewCard onAddPlaceSubmit={handleAddPlaceSubmit} />{" "}
+                {/* Pasar la función de agregar tarjeta */}
+              </Popup>
+            );
+          }
 
           return (
             <Card
